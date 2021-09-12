@@ -60,6 +60,7 @@ void timeLabel::start(){
         return;
     this->IsRun = true;
     this->Timer->start(1000);
+    emit this->doStart(this->wrapStartTime());
 }
 
 void timeLabel::pause(){
@@ -69,6 +70,7 @@ void timeLabel::pause(){
     *(this->Time) = this->Time->addMSecs(1000 - this->Timer->remainingTime());
     this->Timer->stop();
     this->LabelTime->setText(Time->toString("hh:mm:ss"));
+    emit this->doPause(this->wrapPauseTime());
 }
 
 void timeLabel::reset(){
@@ -87,6 +89,19 @@ void timeLabel::update(){
 void timeLabel::record(){
     emit this->doRecord(this->LabelTime->text());
 }
+
+QPair<QString,QString> timeLabel::wrapStartTime(){
+    QString time =  this->LabelTime->text();
+    QString content = QString("start at: ") + QDateTime::currentDateTime().toString("MM/dd hh:mm:ss");
+    return QPair<QString,QString>(time,content);
+}
+
+QPair<QString,QString> timeLabel::wrapPauseTime(){
+    QString time =  this->LabelTime->text();
+    QString content = QString("pause at: ") + QDateTime::currentDateTime().toString("MM/dd hh:mm:ss");
+    return QPair<QString,QString>(time,content);
+}
+
 
 void timeLabel::test(QString test){
     qDebug()<<test;

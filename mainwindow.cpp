@@ -1,4 +1,4 @@
-#include "mainWindow.h"
+#include "mainwindow.h"
 
 
 mainWindow::mainWindow():QWidget(){
@@ -18,6 +18,8 @@ mainWindow::mainWindow():QWidget(){
     MainLayout->addWidget(LabelInput,1);
     MainLayout->addWidget(LabelForm,5);
 
+    connect(this->LabelTime,  &timeLabel::doStart,        this->LabelForm,  &formLabel::getContent);
+    connect(this->LabelTime,  &timeLabel::doPause,        this->LabelForm,  &formLabel::getContent);
     connect(this->LabelTime,  &timeLabel::doRecord,       this->LabelInput, &inputLabel::getTime  );
     connect(this->LabelInput, &inputLabel::doSendContent, this->LabelForm,  &formLabel::getContent);
 
@@ -34,8 +36,8 @@ void mainWindow::setupMenuBar(){
     this->MenuBar->addAction(actionKeymap);
     this->MenuBar->addAction(actionAbout);
 
-    connect(actionKeymap, &QAction::triggered, this, mainWindow::showKeymap);
-    connect(actionAbout,  &QAction::triggered, this, mainWindow::showAbout );
+    connect(actionKeymap, &QAction::triggered, this, &mainWindow::showKeymap);
+    connect(actionAbout,  &QAction::triggered, this, &mainWindow::showAbout );
 }
 
 void mainWindow::showKeymap(){

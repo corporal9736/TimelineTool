@@ -29,6 +29,8 @@ class timeLabel:public QLabel{
         void update();
     signals:
         void doRecord(QString time);
+        void doStart(QPair<QString,QString> content);
+        void doPause(QPair<QString,QString> content);
     public slots:
         void start();
         void pause();
@@ -38,7 +40,8 @@ class timeLabel:public QLabel{
 
     private:
         void setupUI();
-
+        QPair<QString,QString> wrapStartTime();
+        QPair<QString,QString> wrapPauseTime();
         bool IsRun;
         QWidget* parent;
         QTime* Time;
